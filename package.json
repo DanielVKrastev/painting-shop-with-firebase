@@ -1,0 +1,28 @@
+{
+  "name": "painting-shop-with-firebase",
+  "version": "1.0.0",
+  "description": "JavaScript Single Page Application Project for Painting Shop using Firebase",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanielVKrastev/painting-shop-with-firebase.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/DanielVKrastev/painting-shop-with-firebase/issues"
+  },
+  "dependencies": {
+    "firebase": "^11.1.0",
+    "lit-html": "^3.2.1",
+    "page": "^1.11.6"
+  },
+  "devDependencies": {
+    "vite": "^6.0.6"
+  }
+}
