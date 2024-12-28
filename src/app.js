@@ -1,3 +1,7 @@
+
+
+import './config/firebaseInit.js';
+
 import page from "page";
 import layoutView from "./views/layoutView";
 import homeView from "./views/homeView";
