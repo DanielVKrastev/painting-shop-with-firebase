@@ -56,7 +56,7 @@ const layoutTemplate = (body) => html`
     </header>
 
     <!-- BODY CONTENT HERE -->
-    ${body}
+       ${body}
 
     <footer class="site-footer border-top">
             <div class="container">

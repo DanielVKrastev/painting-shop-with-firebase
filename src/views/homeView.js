@@ -1,9 +1,11 @@
 import { html, render } from "lit-html";
+import page from "page";
+import artCategoriesView from "./partials/artCategoriesView";
 
 const rootEl = document.getElementById('site-root');
 
-const template = () => html`
-    <div class="site-blocks-cover" style="background-image: url(./assets/images/background-img.jpg);" data-aos="fade">
+const template = (artCategoriesView) => html`
+<div class="site-blocks-cover" style="background-image: url(./assets/images/background-img.jpg);" data-aos="fade">
     <div class="container">
         <div class="row align-items-start align-items-md-center justify-content-end">
         <div class="col-md-5 text-center text-md-left pt-5 pt-md-0">
@@ -17,10 +19,21 @@ const template = () => html`
         </div>
         </div>
     </div>
-    </div>
+</div>
+
+<div id="partials-content"> 
+</div>
 
 `;
 
-export default function(ctx){
-    ctx.render(template());
+export default function(ctx, next){
+    ctx.render(template(), rootEl);
+
+    const artCategoriesDiv = document.createElement('div');
+    artCategoriesDiv.id = 'art-categories';
+
+    const partialsContent = document.getElementById('partials-content');
+    partialsContent.appendChild(artCategoriesDiv);
+
+    artCategoriesView(artCategoriesDiv);
 }

@@ -9,6 +9,8 @@ import aboutView from "./views/aboutView";
 import artShopView from './views/artShopView.js';
 import portfolioView from './views/portfolioView.js';
 import contactView from './views/contactView.js';
+import artCategoriesView from './views/partials/artCategoriesView.js';
+
 
 page(layoutView);
 
@@ -18,6 +20,8 @@ page('/artshop', artShopView);
 page('/portfolio', portfolioView);
 page('/about', aboutView);
 page('/contact', contactView);
+
+
 
 // Start routing
 page.start();
