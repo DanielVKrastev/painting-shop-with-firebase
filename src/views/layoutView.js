@@ -48,7 +48,7 @@ const layoutTemplate = (body) => html`
                 <li class="active"><a href="/">Начало</a></li>
                 <li><a href="/artshop">Магазин</a></li>
                 <li><a href="/portfolio">Портфолио</a></li>
-                <li><a href="/about">За нас</a></li>
+                <li><a href="/about">За мен</a></li>
                 <li><a href="/contact">Контакти</a></li>
             </ul>
             </div>
@@ -76,7 +76,7 @@ const layoutTemplate = (body) => html`
                     </div>
                     <div class="col-md-6 col-lg-4">
                       <ul class="list-unstyled">
-                        <li><a href="/about">За нас</a></li>
+                        <li><a href="/about">За мен</a></li>
                         <li><a href="/contact">Контакти</a></li>
                         <li><a href="#">Количка</a></li>
                       </ul>

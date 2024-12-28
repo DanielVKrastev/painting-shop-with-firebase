@@ -8,6 +8,7 @@ import homeView from "./views/homeView";
 import aboutView from "./views/aboutView";
 import artShopView from './views/artShopView.js';
 import portfolioView from './views/portfolioView.js';
+import contactView from './views/contactView.js';
 
 page(layoutView);
 
@@ -16,6 +17,7 @@ page('/', homeView);
 page('/artshop', artShopView);
 page('/portfolio', portfolioView);
 page('/about', aboutView);
+page('/contact', contactView);
 
 // Start routing
 page.start();
