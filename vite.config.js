@@ -5,7 +5,7 @@ export default defineConfig({
     base: './',
     build: {
         outDir: '../dist',
-        assetsDir: 'assets',
+        assetsDir: 'assets', // copy all folders from assets folder and paste in dist/assets
         emptyOutDir: true,
     },
 })

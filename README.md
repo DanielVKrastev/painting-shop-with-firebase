@@ -12,7 +12,7 @@ Javascript end to end application using following technologies:
  * Firebase for hosting
  * Bootstrap CSS
  * Page.js for routing
- * Vite for templating
+ * Lit-html for templating
  * Mocha for unit testing
  * Playwright for e2e testing
  * Vite Bundling (package names)
