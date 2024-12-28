@@ -1,6 +1,7 @@
 import { html, render } from "lit-html";
 import artCategoriesView from "./partials/artCategoriesView";
 import featuresView from "./partials/featuresView";
+import artWorksCarouselView from "./partials/artWorksCarouselView";
 
 const rootEl = document.getElementById('site-root');
 
@@ -33,15 +34,16 @@ export default function(ctx, next){
 
     const featuresDiv = document.createElement('div');
     featuresDiv.id = 'features-container';
-
     partialsContent.appendChild(featuresDiv);
-
     featuresView(featuresDiv);
 
     const artCategoriesDiv = document.createElement('div');
     artCategoriesDiv.id = 'art-categories';
-
     partialsContent.appendChild(artCategoriesDiv);
-
     artCategoriesView(artCategoriesDiv);
+
+    const artCarouselDiv = document.createElement('div');
+    artCarouselDiv.id = 'art-carousel-container';
+    partialsContent.appendChild(artCarouselDiv);
+    artWorksCarouselView(artCarouselDiv);
 }

@@ -1,7 +1,5 @@
 import { html, render } from "lit-html";
 
-const rootEl = document.getElementById('art-categories');
-
 const template = () => html`
 <div class="site-section site-section-sm site-blocks-1">
     <div class="container">
