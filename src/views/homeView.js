@@ -1,6 +1,6 @@
 import { html, render } from "lit-html";
-import page from "page";
 import artCategoriesView from "./partials/artCategoriesView";
+import featuresView from "./partials/featuresView";
 
 const rootEl = document.getElementById('site-root');
 
@@ -29,10 +29,18 @@ const template = (artCategoriesView) => html`
 export default function(ctx, next){
     ctx.render(template(), rootEl);
 
+    const partialsContent = document.getElementById('partials-content');
+
+    const featuresDiv = document.createElement('div');
+    featuresDiv.id = 'features-container';
+
+    partialsContent.appendChild(featuresDiv);
+
+    featuresView(featuresDiv);
+
     const artCategoriesDiv = document.createElement('div');
     artCategoriesDiv.id = 'art-categories';
 
-    const partialsContent = document.getElementById('partials-content');
     partialsContent.appendChild(artCategoriesDiv);
 
     artCategoriesView(artCategoriesDiv);

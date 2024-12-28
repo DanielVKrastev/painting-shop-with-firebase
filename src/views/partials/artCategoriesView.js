@@ -50,6 +50,6 @@ const template = () => html`
 
 `;
 
-export default function(artCategoriesDiv){
-    render(template(), artCategoriesDiv);
+export default function(featuresDiv){
+    render(template(), featuresDiv);
 }
