@@ -7,12 +7,14 @@ import layoutView from "./views/layoutView";
 import homeView from "./views/homeView";
 import aboutView from "./views/aboutView";
 import artShopView from './views/artShopView.js';
+import portfolioView from './views/portfolioView.js';
 
 page(layoutView);
 
 // Setup page routing
 page('/', homeView);
 page('/artshop', artShopView);
+page('/portfolio', portfolioView);
 page('/about', aboutView);
 
 // Start routing
