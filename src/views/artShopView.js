@@ -42,10 +42,10 @@ const template = (paintings) => html`
                 <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
                   <div class="block-4 text-center border">
                     <figure class="block-4-image">
-                      <a href="/artshop/drawing?id=${paint.id}"><img src="${paint.imageUrl}" alt="${paint.name}" class="img-fluid"></a>
+                      <a href="/artshop/${paint.id}"><img src="${paint.imageUrl}" alt="${paint.name}" class="img-fluid"></a>
                     </figure>
                     <div class="block-4-text p-4">
-                      <h3><a href="/artshop/drawing?id=${paint.id}">${paint.name}</a></h3>
+                      <h3><a href="/artshop/${paint.id}">${paint.name}</a></h3>
                       <p class="mb-0">Размери: ${paint.size}</p>
                       <p class="text-primary font-weight-bold">${paint.price} лв.</p>
                     </div>

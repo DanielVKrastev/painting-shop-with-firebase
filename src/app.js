@@ -9,7 +9,7 @@ import aboutView from "./views/aboutView";
 import artShopView from './views/artShopView.js';
 import portfolioView from './views/portfolioView.js';
 import contactView from './views/contactView.js';
-import artCategoriesView from './views/partials/artCategoriesView.js';
+import artShopSingleView from './views/artShopSingleView.js';
 
 
 page(layoutView);
@@ -17,6 +17,7 @@ page(layoutView);
 // Setup page routing
 page('/', homeView);
 page('/artshop', artShopView);
+page('/artshop/:id', artShopSingleView);
 page('/portfolio', portfolioView);
 page('/about', aboutView);
 page('/contact', contactView);
