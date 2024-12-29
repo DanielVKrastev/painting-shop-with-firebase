@@ -14,7 +14,7 @@ const template = (artCategoriesView) => html`
             <div class="intro-text text-center text-md-left">
             <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at iaculis quam. Integer accumsan tincidunt fringilla. </p>
             <p>
-                <a href="#" class="btn btn-sm btn-primary">Купи сега</a>
+                <a href="/artshop" class="btn btn-sm btn-primary">Купи сега</a>
             </p>
             </div>
         </div>
