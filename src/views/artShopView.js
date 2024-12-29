@@ -1,9 +1,11 @@
 import { html, render } from "lit-html";
 import paintingApi from "../api/paintingApi";
+import categoryApi from "../api/categoryApi";
+import sizeApi from "../api/sizeApi";
 
 const rootEl = document.getElementById('site-root');
 
-const template = (paintings) => html`
+const template = (paintings, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC) => html`
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
@@ -25,11 +27,11 @@ const template = (paintings) => html`
                   <div class="dropdown mr-1 ml-md-auto">
                   <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">Сортиране</button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-                      <a class="dropdown-item" href="#">Име, А до Я</a>
-                      <a class="dropdown-item" href="#">Име, Я до А</a>
+                      <a class="dropdown-item" href="#" @click=${sortNameASC}>Име, А до Я</a>
+                      <a class="dropdown-item" href="#" @click=${sortNameDESC}>Име, Я до А</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Цена, възходяща</a>
-                      <a class="dropdown-item" href="#">Цена, низходяща</a>
+                      <a class="dropdown-item" href="#" @click=${sortPriceASC}>Цена, възходяща</a>
+                      <a class="dropdown-item" href="#" @click=${sortPriceDESC}>Цена, низходяща</a>
                     </div>
                   </div>
                 </div>
@@ -78,9 +80,10 @@ const template = (paintings) => html`
             <div class="border p-4 rounded mb-4">
               <h3 class="mb-3 h6 text-uppercase text-black d-block">Категории</h3>
               <ul class="list-unstyled mb-0">
-                    <li class="mb-1"><a href="/artshop?category=" class="d-flex"><span>Портрети</span> <span class="text-black ml-auto">(0)</span></a></li>
-                    <li class="mb-1"><a href="/artshop?category=" class="d-flex"><span>Портрети</span> <span class="text-black ml-auto">(0)</span></a></li>
-                    <li class="mb-1"><a href="/artshop?category=" class="d-flex"><span>Портрети</span> <span class="text-black ml-auto">(0)</span></a></li>
+                    ${categories.map(category => html`
+                          <li class="mb-1"><a href="/artshop#category=${category.name}" class="d-flex"><span>${category.name}</span> <span class="text-black ml-auto">(0)</span></a></li>
+                        `)}
+                    
               </ul>
             </div>
 
@@ -95,9 +98,13 @@ const template = (paintings) => html`
 
               <div class="mb-4">
                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Размери</h3>
-                    <label for="s_sm" class="d-flex">
-                      <input type="checkbox" id="s_sm" class="mr-2 mt-1"> <span class="text-black">25см / 35см (0)</span>
-                    </label>
+                    
+                    ${sizes.map(size => html`
+                      <label for="s_sm" class="d-flex">
+                          <input type="checkbox" id="s_sm" class="mr-2 mt-1" value="${size}"> <span class="text-black">${size} (0)</span>
+                      </label>
+                        `)}
+                    
               </div>
 
             </div>
@@ -114,14 +121,66 @@ const template = (paintings) => html`
 `;
 
 export default async function(ctx){
-
+    const categories = await categoryApi.getAll();
+    const sizes = await sizeApi.getAll();
     try{
         const paintings = await paintingApi.getAll();
-        //console.log(paintings);
-        ctx.render(template(paintings));
+        
+        //console.log(categories);
+        ctx.render(template(paintings, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC));
     }catch(error){
         console.log(error.message);
-        
     }
     
+    async function sortNameASC(e){
+      e.preventDefault();
+        try{
+            const sortPaitingNames = await paintingApi.getSort('name');
+
+            const sortedByNameAsc = sortPaitingNames.sort((a, b) => a.name.localeCompare(b.name));
+            ctx.render(template(sortedByNameAsc, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC));
+            //console.log(sortedByNameAsc);
+        }catch(error){
+            console.log(error.message);
+        }
+    }
+
+    async function sortNameDESC(e){
+      e.preventDefault();
+        try{
+          const sortPaitingNames = await paintingApi.getSort('name');
+
+          const sortedByNameDesc = sortPaitingNames.sort((a, b) => b.name.localeCompare(a.name));
+          ctx.render(template(sortedByNameDesc, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC));
+          //console.log(sortedByNameDesc);
+        }catch(error){
+            console.log(error.message);
+        }
+    }
+
+    async function sortPriceASC(e){
+      e.preventDefault();
+      try{
+        const sortPaitingPrice = await paintingApi.getSort('price');
+
+        const sortedByNameAsc = sortPaitingPrice.sort((a, b) => a.price - b.price);
+        ctx.render(template(sortedByNameAsc, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC));
+        //console.log(sortedByNameAsc);
+      }catch(error){
+          console.log(error.message);
+      }
+    }
+
+    async function sortPriceDESC(e){
+      e.preventDefault();
+      try{
+        const sortPaitingPrice = await paintingApi.getSort('price');
+
+        const sortedByPriceDesc = sortPaitingPrice.sort((a, b) => b.price - a.price);
+        ctx.render(template(sortedByPriceDesc, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC));
+        //console.log(sortedByNameDesc);
+      }catch(error){
+          console.log(error.message);
+      }
+    }
 }
