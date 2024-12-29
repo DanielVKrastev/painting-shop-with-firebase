@@ -1,8 +1,6 @@
 import { html, render } from "lit-html";
 import paintingApi from "../api/paintingApi";
 
-const rootEl = document.getElementById('site-root');
-
 const template = (painting) => html`
 <div class="bg-light py-3">
     <div class="container">

@@ -10,6 +10,7 @@ import artShopView from './views/artShopView.js';
 import portfolioView from './views/portfolioView.js';
 import contactView from './views/contactView.js';
 import artShopSingleView from './views/artShopSingleView.js';
+import portfolioSingleView from './views/portfolioSingleView.js';
 
 
 page(layoutView);
@@ -19,6 +20,7 @@ page('/', homeView);
 page('/artshop', artShopView);
 page('/artshop/:id', artShopSingleView);
 page('/portfolio', portfolioView);
+page('/portfolio/:id', portfolioSingleView);
 page('/about', aboutView);
 page('/contact', contactView);
 
