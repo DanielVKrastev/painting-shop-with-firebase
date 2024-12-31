@@ -5,7 +5,7 @@ import sizeApi from "../api/sizeApi";
 
 const rootEl = document.getElementById('site-root');
 
-const template = (paintings, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC) => html`
+const template = (paintings, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter, filterByCategoty) => html`
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
@@ -22,7 +22,7 @@ const template = (paintings, categories, sizes, sortNameASC, sortNameDESC, sortP
 
             <div class="row">
               <div class="col-md-12 mb-5">
-                <div class="float-md-left mb-4"><h2 class="text-black h5">Арт магазин</h2></div>
+                <div class="float-md-left mb-4"><h2 class="text-black h5">Арт магазин ${filterByCategoty ? ` - ${filterByCategoty}`: ''}</h2></div>
                 <div class="d-flex">
                   <div class="dropdown mr-1 ml-md-auto">
                   <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">Сортиране</button>
@@ -81,9 +81,9 @@ const template = (paintings, categories, sizes, sortNameASC, sortNameDESC, sortP
               <h3 class="mb-3 h6 text-uppercase text-black d-block">Категории</h3>
               <ul class="list-unstyled mb-0">
                     ${categories.map(category => html`
-                          <li class="mb-1"><a href="/artshop#category=${category.name}" class="d-flex"><span>${category.name}</span> <span class="text-black ml-auto">(0)</span></a></li>
+                          <li class="mb-1"><a href="javascript:void(0);" class="d-flex" @click="${() => onCategoryClick(category.name)}"><span>${category.name}</span></a></li>
                         `)}
-                    
+                     <li class="mb-1"><a href="javascript:void(0);" class="d-flex" @click="${() => clearFilter('category')}"><b><span>&#x2715; изчисти</span></b></a></li>
               </ul>
             </div>
 
@@ -100,11 +100,12 @@ const template = (paintings, categories, sizes, sortNameASC, sortNameDESC, sortP
                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Размери</h3>
                     
                     ${sizes.map(size => html`
-                      <label for="s_sm" class="d-flex">
-                          <input type="checkbox" id="s_sm" class="mr-2 mt-1" value="${size}"> <span class="text-black">${size} (0)</span>
+                      <label for="s_radio" class="d-flex">
+                          <input type="radio" name="size" id="s_radio" class="mr-2 mt-1" value="${size}"  @change="${onRadioChange}"> <span class="text-black">${size} </span>
                       </label>
                         `)}
-                    
+                      <a href="javascript:void(0);" class="d-flex"  @click="${() => clearFilter('size')}"><b><span>&#x2715; изчисти</span></b></a>
+                  
               </div>
 
             </div>
@@ -120,67 +121,166 @@ const template = (paintings, categories, sizes, sortNameASC, sortNameDESC, sortP
 
 `;
 
-export default async function(ctx){
+export default async function artShopView(ctx){
     const categories = await categoryApi.getAll();
     const sizes = await sizeApi.getAll();
-    try{
-        const paintings = await paintingApi.getAll();
-        
-        //console.log(categories);
-        ctx.render(template(paintings, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC));
-    }catch(error){
-        console.log(error.message);
-    }
+
+    loadData();
     
+    async function loadData(){
+
+      const urlParams = new URLSearchParams(window.location.search); // Cut # and create Object
+      const category = urlParams.get('category'); // Get value on 'category'
+      const size = urlParams.get('size'); // Get value on 'category'
+      
+        if (!category && !size) {
+            try {
+              const paintings = await paintingApi.getAll();
+              console.log('none');
+              ctx.render(template(paintings, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter));
+            } catch (error) {
+              console.log(error.message);
+            }
+        } else if(size && !category){
+              const sizesCheck = size.split(',');
+              const sizeFilter = await paintingApi.getPaintingsBySize(sizesCheck); //equalToCategory is a String, equalToSize is a Array
+              console.log('size');
+              
+            
+              ctx.render(template(sizeFilter, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter));
+              //paintingFilter(category, sizesCheck);
+          }else if(category && !size){
+              const categoryFilter = await paintingApi.getPaintingsByCategory(category); //equalToCategory is a String, equalToSize is a Array
+              console.log('category');
+              ctx.render(template(categoryFilter, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter));
+              //paintingFilter(category, sizesCheck);
+            }
+          else{
+            const allfilter = await paintingApi.getCombinedPaintings(category, size);
+            console.log('filter');
+            
+            ctx.render(template(allfilter, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter));
+            //paintingFilter(category);
+
+          }
+        }
+    
+    // Sort name by ASC
     async function sortNameASC(e){
       e.preventDefault();
         try{
             const sortPaitingNames = await paintingApi.getSort('name');
 
             const sortedByNameAsc = sortPaitingNames.sort((a, b) => a.name.localeCompare(b.name));
-            ctx.render(template(sortedByNameAsc, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC));
-            //console.log(sortedByNameAsc);
+            ctx.render(template(sortedByNameAsc, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter));
         }catch(error){
             console.log(error.message);
         }
     }
 
+     // Sort name by DESC
     async function sortNameDESC(e){
       e.preventDefault();
         try{
           const sortPaitingNames = await paintingApi.getSort('name');
 
           const sortedByNameDesc = sortPaitingNames.sort((a, b) => b.name.localeCompare(a.name));
-          ctx.render(template(sortedByNameDesc, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC));
-          //console.log(sortedByNameDesc);
+          ctx.render(template(sortedByNameDesc, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter));
         }catch(error){
             console.log(error.message);
         }
     }
 
+    // Sort price by ASC
     async function sortPriceASC(e){
       e.preventDefault();
       try{
         const sortPaitingPrice = await paintingApi.getSort('price');
 
         const sortedByNameAsc = sortPaitingPrice.sort((a, b) => a.price - b.price);
-        ctx.render(template(sortedByNameAsc, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC));
-        //console.log(sortedByNameAsc);
+        ctx.render(template(sortedByNameAsc, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter));
       }catch(error){
           console.log(error.message);
       }
     }
 
+    // Sort price by DESC
     async function sortPriceDESC(e){
       e.preventDefault();
       try{
         const sortPaitingPrice = await paintingApi.getSort('price');
 
         const sortedByPriceDesc = sortPaitingPrice.sort((a, b) => b.price - a.price);
-        ctx.render(template(sortedByPriceDesc, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC));
-        //console.log(sortedByNameDesc);
+        ctx.render(template(sortedByPriceDesc, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter));
       }catch(error){
           console.log(error.message);
       }
+    }
+
+    function getSelectedCategory() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('category');
+    }
+
+    function getSelectedSize() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('size');
+    }
+
+    function onCategoryClick(selectedCategory) {
+      const selectedSize = getSelectedSize();  // Функция, която ще върне избрания размер, ако има такъв
+  
+      // Вземаме текущия URL
+      const currentUrl = new URL(window.location);
+  
+      // Ако има избрана категория, добавяме параметъра category
+      if (selectedCategory) {
+          currentUrl.searchParams.set('category', selectedCategory);
+      }
+  
+      // Ако има избран размер, добавяме параметъра size
+      if (selectedSize) {
+          currentUrl.searchParams.set('size', selectedSize);
+      }
+  
+      // Променяме URL-то без презареждане на страницата
+      window.history.pushState({}, '', currentUrl);
+      loadData();
+      //console.log(currentUrl.toString());
+    }
+  
+    function onRadioChange(event) {
+      const selectedSize = event.target.value; // Вземаме стойността на избрания размер
+
+      const selectedCategory = getSelectedCategory();  // Функция, която ще върне избраната категория, ако има такава
+
+      // Вземаме текущия URL
+      const currentUrl = new URL(window.location);
+
+      // Ако има избран размер, добавяме параметъра size
+      if (selectedSize) {
+          currentUrl.searchParams.set('size', selectedSize);
+      }
+
+      // Ако има избрана категория, добавяме параметъра category
+      if (selectedCategory) {
+          currentUrl.searchParams.set('category', selectedCategory);
+      }
+
+      // Променяме URL-то без презареждане на страницата
+      window.history.pushState({}, '', currentUrl);
+      loadData();
+      //console.log(currentUrl.toString());
+    }
+
+    function clearFilter(clearFilter){
+        const currentUrl = new URL(window.location);
+
+        // Clear filter (category or size)
+        currentUrl.searchParams.delete(clearFilter);
+
+        // Refresh url
+        history.pushState(null, "", currentUrl.toString());
+        loadData();
     }
 }
