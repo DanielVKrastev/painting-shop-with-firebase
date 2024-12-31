@@ -152,14 +152,14 @@ export default async function artShopView(ctx){
           }else if(category && !size){
               const categoryFilter = await paintingApi.getPaintingsByCategory(category); //equalToCategory is a String, equalToSize is a Array
               console.log('category');
-              ctx.render(template(categoryFilter, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter));
+              ctx.render(template(categoryFilter, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter, category));
               //paintingFilter(category, sizesCheck);
             }
           else{
             const allfilter = await paintingApi.getCombinedPaintings(category, size);
             console.log('filter');
             
-            ctx.render(template(allfilter, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter));
+            ctx.render(template(allfilter, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter, category));
             //paintingFilter(category);
 
           }

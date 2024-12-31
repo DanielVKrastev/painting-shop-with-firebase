@@ -136,10 +136,22 @@ const layoutTemplate = (body) => html`
 `;
 
 export default function(ctx, next){
+  closeMobileNav();
     
-    ctx.render = (templateResult) => {
-        render(layoutTemplate(templateResult), rootEl);
-    }
+  ctx.render = (templateResult) => {
+      render(layoutTemplate(templateResult), rootEl);
+  }
 
-    next();
+  function closeMobileNav() {
+      const menuButtons = document.querySelectorAll('.site-nav-wrap li');
+      document.querySelector('body').classList.remove('offcanvas-menu');
+      
+      menuButtons.forEach(li => {
+          li.addEventListener('click', function() {
+              document.querySelector('body').classList.remove('offcanvas-menu');
+          });
+      });
+  }
+
+  next();
 }
