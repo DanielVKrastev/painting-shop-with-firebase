@@ -276,6 +276,13 @@ export default async function artShopView(ctx){
     function clearFilter(clearFilter){
         const currentUrl = new URL(window.location);
 
+        if(clearFilter === 'size'){
+          const radioButtons =  document.querySelectorAll('#s_radio');
+          
+          // clear all radio checked
+          radioButtons.forEach(radio => radio.checked = false);
+        }
+
         // Clear filter (category or size)
         currentUrl.searchParams.delete(clearFilter);
 
