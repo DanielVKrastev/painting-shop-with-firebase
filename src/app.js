@@ -24,7 +24,5 @@ page('/portfolio/:id', portfolioSingleView);
 page('/about', aboutView);
 page('/contact', contactView);
 
-
-
 // Start routing
 page.start();

@@ -135,23 +135,22 @@ const layoutTemplate = (body) => html`
 
 `;
 
-export default function(ctx, next){
-  closeMobileNav();
-    
+export default async function(ctx, next) {
   ctx.render = (templateResult) => {
       render(layoutTemplate(templateResult), rootEl);
-  }
+      initMobileNav(); // Приложете настройките за мобилната навигация след рендер
+  };
 
-  function closeMobileNav() {
-      const menuButtons = document.querySelectorAll('.site-nav-wrap li');
-      document.querySelector('body').classList.remove('offcanvas-menu');
-      
-      menuButtons.forEach(li => {
-          li.addEventListener('click', function() {
-              document.querySelector('body').classList.remove('offcanvas-menu');
-          });
+  await next();
+}
+
+function initMobileNav() {
+  const menuButtons = document.querySelectorAll('.site-nav-wrap li');
+  document.querySelector('body').classList.remove('offcanvas-menu');
+  
+  menuButtons.forEach(li => {
+      li.addEventListener('click', function() {
+          document.querySelector('body').classList.remove('offcanvas-menu');
       });
-  }
-
-  next();
+  });
 }

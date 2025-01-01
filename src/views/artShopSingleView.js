@@ -44,6 +44,35 @@ export default async function(ctx){
         const painting = await paintingApi.getOne(paintingId);
         //console.log(painting);
         ctx.render(template(painting));
+
+        const parentDiv = document.querySelector('.site-wrap');
+        const loadedNavMobile = document.querySelector('.site-mobile-menu');
+
+        // Little cheat, is not good.
+        // If open .../portfolio the mobile menu not rendered. Maybe have a loaded asynchronous function is incorrect
+        if(!loadedNavMobile){
+          const newDivNavMobile = `<!-- Mobile menu -->
+          <div class="site-mobile-menu">
+              <div class="site-mobile-menu-header">
+                  <div class="site-mobile-menu-logo">
+                      <a href="/" class="js-logo-clone">Krasteva Gallery</a>
+                  </div>
+                  <div class="site-mobile-menu-close">
+                      <span class="ion-ios-close js-menu-toggle"></span>
+                  </div>
+              </div>
+              <div class="site-mobile-menu-body">
+                  <ul class="site-nav-wrap">
+                      <li class="active"><a href="/">Начало</a></li>
+                      <li><a href="/artshop">Магазин</a></li>
+                      <li><a href="/portfolio">Портфолио</a></li>
+                      <li><a href="/about">За мен</a></li>
+                      <li><a href="/contact">Контакти</a></li>
+                  </ul>
+              </div>
+          </div>`;
+          parentDiv.insertAdjacentHTML('afterbegin', newDivNavMobile);
+        }
     }catch(error){
         console.log(error.message);
         
