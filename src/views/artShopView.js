@@ -27,11 +27,11 @@ const template = (paintings, categories, sizes, sortNameASC, sortNameDESC, sortP
                   <div class="dropdown mr-1 ml-md-auto">
                   <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">Сортиране</button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-                      <a class="dropdown-item" href="#" @click=${sortNameASC}>Име, А до Я</a>
-                      <a class="dropdown-item" href="#" @click=${sortNameDESC}>Име, Я до А</a>
+                      <a class="dropdown-item" href="javascript:void(0);" @click=${sortNameASC}>Име, А до Я</a>
+                      <a class="dropdown-item" href="javascript:void(0);" @click=${sortNameDESC}>Име, Я до А</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#" @click=${sortPriceASC}>Цена, възходяща</a>
-                      <a class="dropdown-item" href="#" @click=${sortPriceDESC}>Цена, низходяща</a>
+                      <a class="dropdown-item" href="javascript:void(0);" @click=${sortPriceASC}>Цена, възходяща</a>
+                      <a class="dropdown-item" href="javascript:void(0);" @click=${sortPriceDESC}>Цена, низходяща</a>
                     </div>
                   </div>
                 </div>

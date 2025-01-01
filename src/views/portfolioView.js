@@ -1,7 +1,7 @@
 import { html, render } from "lit-html";
 import paintingApi from "../api/paintingApi";
 
-const template = (paintings) => html`
+const template = (paintings, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC) => html`
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
@@ -26,11 +26,11 @@ const template = (paintings) => html`
                       <div class="dropdown mr-1 ml-md-auto">
                       <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">Сортиране</button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-                          <a class="dropdown-item" href="#">Име, А до Я</a>
-                          <a class="dropdown-item" href="#">Име, Я до А</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="#">Цена, възходяща</a>
-                          <a class="dropdown-item" href="#">Цена, низходяща</a>
+                        <a class="dropdown-item" href="javascript:void(0);" @click=${sortNameASC}>Име, А до Я</a>
+                        <a class="dropdown-item" href="javascript:void(0);" @click=${sortNameDESC}>Име, Я до А</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="javascript:void(0);" @click=${sortPriceASC}>Цена, възходяща</a>
+                        <a class="dropdown-item" href="javascript:void(0);" @click=${sortPriceDESC}>Цена, низходяща</a>
                         </div>
                       </div>
                     </div>
@@ -89,7 +89,7 @@ export default async function(ctx){
     try{
         const paintings = await paintingApi.getAll();
         //console.log(paintings);
-        ctx.render(template(paintings));
+        ctx.render(template(paintings, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC));
 
         const parentDiv = document.querySelector('.site-wrap');
         const loadedNavMobile = document.querySelector('.site-mobile-menu');
@@ -124,5 +124,57 @@ export default async function(ctx){
     }catch(error){
         console.log(error.message);
     }
+
+        // Sort name by ASC
+        async function sortNameASC(e){
+          e.preventDefault();
+            try{
+                const sortPaitingNames = await paintingApi.getSort('name');
+    
+                const sortedByNameAsc = sortPaitingNames.sort((a, b) => a.name.localeCompare(b.name));
+                ctx.render(template(sortedByNameAsc, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC));
+            }catch(error){
+                console.log(error.message);
+            }
+        }
+    
+         // Sort name by DESC
+        async function sortNameDESC(e){
+          e.preventDefault();
+            try{
+              const sortPaitingNames = await paintingApi.getSort('name');
+    
+              const sortedByNameDesc = sortPaitingNames.sort((a, b) => b.name.localeCompare(a.name));
+              ctx.render(template(sortedByNameDesc, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC));
+            }catch(error){
+                console.log(error.message);
+            }
+        }
+    
+        // Sort price by ASC
+        async function sortPriceASC(e){
+          e.preventDefault();
+          try{
+            const sortPaitingPrice = await paintingApi.getSort('price');
+    
+            const sortedByNameAsc = sortPaitingPrice.sort((a, b) => a.price - b.price);
+            ctx.render(template(sortedByNameAsc, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC));
+          }catch(error){
+              console.log(error.message);
+          }
+        }
+    
+        // Sort price by DESC
+        async function sortPriceDESC(e){
+          e.preventDefault();
+          try{
+            const sortPaitingPrice = await paintingApi.getSort('price');
+    
+            const sortedByPriceDesc = sortPaitingPrice.sort((a, b) => b.price - a.price);
+            ctx.render(template(sortedByPriceDesc, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC));
+          }catch(error){
+              console.log(error.message);
+          }
+        }
     
 }
