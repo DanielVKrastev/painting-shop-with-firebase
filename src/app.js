@@ -1,5 +1,3 @@
-
-
 import './config/firebaseInit.js';
 
 import page from "page";

@@ -138,7 +138,7 @@ const layoutTemplate = (body) => html`
 export default async function(ctx, next) {
   ctx.render = (templateResult) => {
       render(layoutTemplate(templateResult), rootEl);
-      initMobileNav(); // Приложете настройките за мобилната навигация след рендер
+      initMobileNav();
   };
 
   await next();
