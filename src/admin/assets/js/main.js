@@ -1,4 +1,4 @@
-export default function chartCanvas() {(function chartCanvas($) {
+export default function mainFunction() {(function ($) {
     
     "use strict";
 
@@ -28,11 +28,17 @@ export default function chartCanvas() {(function chartCanvas($) {
 
 
     // Sidebar Toggler
-    $('.sidebar-toggler').click(function () {
-        $('.sidebar, .content').toggleClass("open");
-        return false;
+    const sideBar = document.querySelector('.sidebar-toggler');
+        sideBar.addEventListener('click', function() {
+            $('.sidebar, .content').toggleClass("open");
     });
 
+    const menuButtons = document.querySelectorAll('.navbar-nav li');
+    menuButtons.forEach(li => {
+        li.addEventListener('click', function() {
+            $('.sidebar, .content').removeClass("open");
+        });
+    });
 
     // Progress Bar
     $('.pg-bar').waypoint(function () {

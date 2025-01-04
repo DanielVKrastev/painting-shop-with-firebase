@@ -1,5 +1,4 @@
 import { html } from "lit-html";
-import chartCanvas from "../assets/js/main.js";
 
 const template = () => html`
  <!-- Chart Start -->
@@ -48,5 +47,4 @@ const template = () => html`
 
 export default function(ctx, next){
     ctx.render(template());
-    chartCanvas();
 }

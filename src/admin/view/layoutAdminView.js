@@ -1,4 +1,5 @@
 import { html, render } from "lit-html";
+import mainFunction from "../assets/js/main.js";
 
 const rootEl = document.querySelector('#site-root');
 
@@ -30,10 +31,10 @@ const layoutTemplate = (body) => html`
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="/admin/" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Начало</a>
-                    <a href="/admin/create" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Създаване</a>
-                    <a href="/admin/tables" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Таблици</a>
-                    <a href="/admin/charts" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Графики</a>
+                    <li><a href="/admin/" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Начало</a></li>
+                    <li><a href="/admin/create" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Създаване</a></li>
+                    <li><a href="/admin/tables" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Таблици</a></li>
+                    <li><a href="/admin/charts" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Графики</a></li>
                 </div>
             </nav>
         </div>
@@ -44,10 +45,10 @@ const layoutTemplate = (body) => html`
         <div class="content">
  <!-- Navbar Start -->
  <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                <a href="/admin" class="navbar-brand d-flex d-lg-none me-4">
+                <a href="/admin/" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
                 </a>
-                <a href="#" class="sidebar-toggler flex-shrink-0">
+                <a href="" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
                 <form class="d-none d-md-flex ms-4">
@@ -55,7 +56,7 @@ const layoutTemplate = (body) => html`
                 </form>
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <a href="javascrpit:void(0)" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-envelope me-lg-2"></i>
                             <span class="d-none d-lg-inline-flex">Запитвания</span>
                         </a>
@@ -141,7 +142,8 @@ export default function(ctx, next) {
   
   (ctx.render = (templateResult) => {
       render(layoutTemplate(templateResult), rootEl);
+      mainFunction();
   })();
-
+  mainFunction();
   next();
 }
