@@ -1,4 +1,5 @@
-(function ($) {
+export default function chartCanvas() {(function chartCanvas($) {
+    
     "use strict";
 
     // Spinner
@@ -60,6 +61,8 @@
 
 
     // Worldwide Sales Chart
+    const canvas = $("#line-chart").get(0);
+    if(!canvas) return;
     var ctx1 = $("#worldwide-sales").get(0).getContext("2d");
     var myChart1 = new Chart(ctx1, {
         type: "bar",
@@ -203,5 +206,5 @@
     });
 
     
-})(jQuery);
+})(jQuery);}
 

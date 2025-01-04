@@ -1,5 +1,5 @@
 import { html } from "lit-html";
-
+import chartCanvas from "../assets/js/main.js";
 
 const template = () => html`
             <!-- Sale & Revenue Start -->
@@ -9,7 +9,7 @@ const template = () => html`
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-line fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Today Sale</p>
+                                <p class="mb-2">Днешни приходи</p>
                                 <h6 class="mb-0">$1234</h6>
                             </div>
                         </div>
@@ -18,7 +18,7 @@ const template = () => html`
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-bar fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Total Sale</p>
+                                <p class="mb-2">Общо приходи</p>
                                 <h6 class="mb-0">$1234</h6>
                             </div>
                         </div>
@@ -27,8 +27,8 @@ const template = () => html`
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-area fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Today Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">Запитвания</p>
+                                <h6 class="mb-0">34</h6>
                             </div>
                         </div>
                     </div>
@@ -36,8 +36,8 @@ const template = () => html`
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-pie fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Total Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">Общо поръчки</p>
+                                <h6 class="mb-0">6</h6>
                             </div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@ const template = () => html`
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Recent Salse</h6>
+                        <h6 class="mb-0">Поръчки</h6>
                         <a href="">Show All</a>
                     </div>
                     <div class="table-responsive">
@@ -125,8 +125,8 @@ const template = () => html`
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <div class="h-100 bg-light rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-2">
-                                <h6 class="mb-0">Messages</h6>
-                                <a href="">Show All</a>
+                                <h6 class="mb-0">Последни запитвания</h6>
+                                <a href="">Покажи всички</a>
                             </div>
                             <div class="d-flex align-items-center border-bottom py-3">
                                 <img class="rounded-circle flex-shrink-0" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
@@ -173,8 +173,8 @@ const template = () => html`
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <div class="h-100 bg-light rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Calender</h6>
-                                <a href="">Show All</a>
+                                <h6 class="mb-0">Календар</h6>
+                                <a href="">Покажи</a>
                             </div>
                             <div id="calender"></div>
                         </div>
@@ -244,4 +244,5 @@ const template = () => html`
 
 export default function(ctx, next){
     ctx.render(template());
+    chartCanvas();
 }
