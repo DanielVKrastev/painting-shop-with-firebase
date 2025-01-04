@@ -1,6 +1,9 @@
 import { html } from "lit-html";
+import paintingApi from "../../api/paintingApi";
+import sizeApi from "../../api/sizeApi";
+import categoryApi from "../../api/categoryApi";
 
-const template = () => html`
+const template = (paintings, categories, sizes) => html`
  <!-- Table Start -->
  <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
@@ -16,21 +19,13 @@ const template = () => html`
                         </tr>
                     </thead>
                     <tbody>
+                        ${categories.map((category, id=0) => html`
                         <tr>
-                            <th scope="row">1</th>
-                            <td>портрети</td>
-                            <td>Doe</td>
+                            <th scope="row">${id++}</th>
+                            <td>${category.name}</td>
+                            <td>${category.imageUrl}</td>
                         </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>пейзажи</td>
-                            <td>Otto</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>абстрактни картини</td>
-                            <td>Thornton</td>
-                        </tr>
+                        `)}
                     </tbody>
                 </table>
             </div>
@@ -47,22 +42,12 @@ const template = () => html`
                         </tr>
                     </thead>
                     <tbody>
+                        ${sizes.map((size, id=0) => html`
                         <tr>
-                            <th scope="row">1</th>
-                            <td>25см / 35см</td>
+                            <th scope="row">${id++}</th>
+                            <td>${size}</td>
                         </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>40цм / 50см</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>40цм / 50см</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>40цм / 50см</td>
-                        </tr>
+                        `)}
                     </tbody>
                 </table>
             </div>
@@ -88,39 +73,22 @@ const template = () => html`
                             </tr>
                         </thead>
                         <tbody>
+
+
+                            ${paintings.map((painting, id=0) => html`
                             <tr>
-                                <th scope="row">1</th>
-                                <td>John</td>
-                                <td>Doe</td>
-                                <td>jhon@email.com</td>
-                                <td>USA</td>
-                                <td>123</td>
-                                <td>Member</td>
-                                <td>Member</td>
-                                <td>Member</td>
+                                <th scope="row">${id++}</th>
+                                <td>${painting.name}</td>
+                                <td>${painting.category}</td>
+                                <td>${painting.size}</td>
+                                <td>${painting.paints}</td>
+                                <td>${painting.imageUrl.length > 20 ? painting.imageUrl.substring(0, 20) + '...' : painting.imageUrl}</td>
+                                <td>${painting.description.length > 20 ? painting.description.substring(0, 20) + '...' : painting.description}</td>
+                                <td>${painting.price}</td>
+                                <td>${painting.sold}</td>
+                                <td>${painting.active}</td>
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>mark@email.com</td>
-                                <td>UK</td>
-                                <td>456</td>
-                                <td>Member</td>
-                                <td>Member</td>
-                                <td>Member</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>jacob@email.com</td>
-                                <td>AU</td>
-                                <td>789</td>
-                                <td>Member</td>
-                                <td>Member</td>
-                                <td>Member</td>
-                            </tr>
+                        `)}
                         </tbody>
                     </table>
                 </div>
@@ -132,6 +100,12 @@ const template = () => html`
 
 `;
 
-export default function(ctx, next){
-    ctx.render(template());
+export default async function(ctx, next){
+    const paintings = await paintingApi.getAll();
+    const sizes = await sizeApi.getAll();
+    const categories = await categoryApi.getAll();
+    console.log(categories);
+    
+    
+    ctx.render(template(paintings, categories, sizes));
 }
