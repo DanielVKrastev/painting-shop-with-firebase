@@ -242,5 +242,9 @@ const template = () => html`
 `;
 
 export default function(ctx, next){
+    console.log(ctx.user);
+    
+    console.log(ctx.isAuthenticated);
+    
     ctx.render(template());
 }

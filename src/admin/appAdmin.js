@@ -4,7 +4,9 @@ import homeAdminView from "./view/homeAdminView";
 import createAdminView from "./view/createAdminView";
 import tablesAdminView from "./view/tablesAdminView";
 import chartsAdminView from "./view/chartsAdminView";
+import { authMiddleware } from "./middlewares/auth";
 
+page(authMiddleware);
 page(layoutAdminView);
 
 // Setup page routing
