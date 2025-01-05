@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { browserLocalPersistence, getAuth, setPersistence } from "firebase/auth";
+import { browserLocalPersistence, getAuth, onAuthStateChanged, setPersistence } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 import page from "page";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -26,13 +26,15 @@ export const database = getDatabase(app);
 
 setPersistence(auth, browserLocalPersistence)
   .then(() => {
-    //console.log('persistence');
-    
+    // Handle post-persistence setup without redirecting or refreshing
+    console.log("Persistence has been set successfully.");
+    // Optionally, update app state or call a function
+
     // Refresh current page when persistence is loaded, little hack
-    page.redirect(location.pathname)
+    //page.redirect(location.pathname)
   })
   .catch(err => {
-    console.log(err);
+    console.error("Failed to set persistence:", err);
   })
 
 export default app;

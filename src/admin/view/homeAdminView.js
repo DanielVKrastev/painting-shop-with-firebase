@@ -1,4 +1,6 @@
+import { onAuthStateChanged } from "firebase/auth";
 import { html } from "lit-html";
+import { auth } from "../../config/firebaseInit";
 
 const template = () => html`
             <!-- Sale & Revenue Start -->
@@ -241,10 +243,15 @@ const template = () => html`
 
 `;
 
-export default function(ctx, next){
-    console.log(ctx.user);
+export default async function(ctx, next){
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            ctx.render(template());
+          // Update your UI or global state with the user info
+        } else {
+            // Redirect if no haven't user
+            const currentUrl = new URL(window.location);
+            window.location.href = `${currentUrl.origin}/admin/login`;
+        }})
     
-    console.log(ctx.isAuthenticated);
-    
-    ctx.render(template());
 }
