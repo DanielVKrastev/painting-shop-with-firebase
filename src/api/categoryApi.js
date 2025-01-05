@@ -7,9 +7,9 @@ async function getAll() {
         return await new Error(response.json());
     }
 
-    const result = await response.json();
+    const result = await (response.json());
 
-    return result;
+    return Object.values(result);
 }
 
 async function getOne(id) {
@@ -24,7 +24,21 @@ async function getOne(id) {
     return result;
 }
 
+async function create(data, token) {
+    const response = await fetch(`${baseUrl}.json?auth=${token}`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+    return result;
+}
+
 export default{
     getAll,
-    getOne
+    getOne,
+    create
 }

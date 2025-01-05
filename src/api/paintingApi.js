@@ -9,7 +9,7 @@ async function getAll() {
 
     const result = await response.json();
 
-    return result;
+    return Object.values(result);
 }
 
 async function getOne(id) {
@@ -33,7 +33,7 @@ async function getSort(bySort) {
 
     const result = await response.json();
 
-    return result;
+    return Object.values(result);
 }
 
 async function getEqualSort(equalToCategory, equalToSizes) {

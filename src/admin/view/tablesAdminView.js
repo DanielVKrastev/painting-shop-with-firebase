@@ -105,6 +105,7 @@ export default async function(ctx, next){
     const sizes = await sizeApi.getAll();
     const categories = await categoryApi.getAll();
     console.log(categories);
+    console.log(paintings);
     
     
     ctx.render(template(paintings, categories, sizes));
