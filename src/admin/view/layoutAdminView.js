@@ -1,9 +1,11 @@
 import { html, render } from "lit-html";
 import mainFunction from "../assets/js/main.js";
+import { signOut } from "firebase/auth";
+import { auth } from "../../config/firebaseInit.js";
 
 const rootEl = document.querySelector('#site-root');
 
-const layoutTemplate = (body) => html`
+const layoutTemplate = (body, logoutHandler) => html`
 <div class="container-xxl position-relative bg-white d-flex p-0">
         <!-- Spinner Start 
         <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -101,7 +103,7 @@ const layoutTemplate = (body) => html`
                             <span class="d-none d-lg-inline-flex">Елица Кръстева</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a @click=${logoutHandler} href="javascript:void(0)" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -141,9 +143,22 @@ const layoutTemplate = (body) => html`
 export default function(ctx, next) {
   
   (ctx.render = (templateResult) => {
-      render(layoutTemplate(templateResult), rootEl);
+      render(layoutTemplate(templateResult, logoutHandler), rootEl);
       mainFunction();
   })();
   mainFunction();
   next();
+}
+
+async function logoutHandler(e) {
+    e.preventDefault();
+
+    try{
+        await signOut(auth);
+        const currentUrl = new URL(window.location);
+        window.location.href = `${currentUrl.origin}/admin/login`;
+    }catch(err){
+        console.log(err.message);
+    }
+    
 }
