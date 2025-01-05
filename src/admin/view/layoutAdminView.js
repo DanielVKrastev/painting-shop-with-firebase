@@ -156,7 +156,7 @@ async function logoutHandler(e) {
     try{
         await signOut(auth);
         const currentUrl = new URL(window.location);
-        window.location.href = `${currentUrl.origin}/admin/login`;
+        window.location.href = `${currentUrl.origin}/login`;
     }catch(err){
         console.log(err.message);
     }

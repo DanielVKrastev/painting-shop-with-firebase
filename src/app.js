@@ -9,7 +9,7 @@ import portfolioView from './views/portfolioView.js';
 import contactView from './views/contactView.js';
 import artShopSingleView from './views/artShopSingleView.js';
 import portfolioSingleView from './views/portfolioSingleView.js';
-import loginAdminView from './admin/view/loginAdminView.js';
+import loginAdminView from './views/loginAdminView.js';
 
 page(layoutView);
 
@@ -21,7 +21,7 @@ page('/portfolio', portfolioView);
 page('/portfolio/:id', portfolioSingleView);
 page('/about', aboutView);
 page('/contact', contactView);
-page('/admin/login', loginAdminView);
+page('/login', loginAdminView);
 
 // Reload admin section
 const currentUrl = new URL(window.location);

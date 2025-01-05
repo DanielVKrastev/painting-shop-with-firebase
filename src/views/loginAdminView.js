@@ -1,8 +1,8 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { html, render } from "lit-html";
-import { auth } from "../../config/firebaseInit";
+import { auth } from "../config/firebaseInit";
 
-const rootEl = document.querySelector('body');
+const rootEl = document.querySelector('#site-root');
 const template = (onSubmit) => html`
 <div class="container-xxl position-relative bg-white d-flex p-0">
     <!-- Sign In Start -->
@@ -35,7 +35,7 @@ const template = (onSubmit) => html`
 </div>
 `;
 
-export default function(ctx, next){
+export default function loginAdminView(ctx, next){
     render(template(loginFormSubmit), rootEl);
 }
 

@@ -251,7 +251,9 @@ export default async function(ctx, next){
         } else {
             // Redirect if no haven't user
             const currentUrl = new URL(window.location);
-            window.location.href = `${currentUrl.origin}/admin/login`;
+            console.log(currentUrl.origin);
+            
+            window.location.href = `${currentUrl.origin}/login`;
         }})
     
 }
