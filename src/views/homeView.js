@@ -3,8 +3,6 @@ import artCategoriesView from "./partials/artCategoriesView";
 import featuresView from "./partials/featuresView";
 import artWorksCarouselView from "./partials/artWorksCarouselView";
 
-const rootEl = document.getElementById('site-root');
-
 const template = (artCategoriesView) => html`
 <div class="site-blocks-cover" style="background-image: url(./assets/images/background-img.jpg);" data-aos="fade">
     <div class="container">
@@ -28,7 +26,7 @@ const template = (artCategoriesView) => html`
 `;
 
 export default function(ctx, next){
-    ctx.render(template(), rootEl);
+    ctx.render(template());
 
     const partialsContent = document.getElementById('partials-content');
 

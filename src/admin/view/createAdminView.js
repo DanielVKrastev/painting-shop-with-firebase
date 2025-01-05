@@ -1,6 +1,6 @@
-import { html } from "lit-html";
+import { html, render } from "lit-html";
 
-
+const rootEl = document.querySelector('body');
 const template = () => html`
  <!-- Form Start -->
  <div class="container-fluid pt-4 px-4">
@@ -137,4 +137,6 @@ const template = () => html`
 
 export default function(ctx, next){
     ctx.render(template());
+    
+    
 }

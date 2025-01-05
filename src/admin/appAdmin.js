@@ -12,6 +12,6 @@ page('/admin', homeAdminView);
 page('/admin/create', createAdminView);
 page('/admin/tables', tablesAdminView);
 page('/admin/charts', chartsAdminView);
-console.log(typeof Chart);
+
 // Start routing
 page.start();
