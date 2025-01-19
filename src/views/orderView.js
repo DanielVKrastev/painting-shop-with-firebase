@@ -26,33 +26,33 @@ const template = (painting) => html`
                 <div class="form-group row">
                   <div class="col-md-6">
                     <label for="c_fname" class="text-black">Име <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="c_fname" name="c_fname">
+                    <input type="text" class="form-control" id="c_fname" name="first-name">
                   </div>
                   <div class="col-md-6">
                     <label for="c_lname" class="text-black">Фамилия <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="c_lname" name="c_lname">
+                    <input type="text" class="form-control" id="c_lname" name="last-name">
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col-md-12">
                     <label for="c_email" class="text-black">Имейл <span class="text-danger">*</span></label>
-                    <input type="email" class="form-control" id="c_email" name="c_email" placeholder="">
+                    <input type="email" class="form-control" id="c_email" name="email" placeholder="">
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col-md-12">
-                    <label for="c_subject" class="text-black">Телефон </label> <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control" id="c_subject" name="c_subject">
+                    <label for="telephone" class="text-black">Телефон </label> <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" id="telephone" name="telephone">
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col-md-6">
-                    <label for="c_fname" class="text-black">Град / Село<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="c_fname" name="c_fname">
+                    <label for="city" class="text-black">Град / Село<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="city" name="city">
                   </div>
                   <div class="col-md-6">
-                    <label for="c_lname" class="text-black">Адрес <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="c_lname" name="c_lname">
+                    <label for="address" class="text-black">Адрес <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="address" name="address">
                   </div>
                 </div>
 
