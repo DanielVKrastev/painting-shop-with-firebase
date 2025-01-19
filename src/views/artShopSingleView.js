@@ -27,7 +27,7 @@ const template = (painting) => html`
                 <i><b>Бои: ${painting.paints}</b></i> 
 
                 <p><strong class="text-primary h4">${painting.price} лв.</strong></p>
-                <p><a href="#"><input type="submit" class="buy-now btn btn-sm btn-primary" value="Купи"></a></p>
+                <p><a href="/artshop/${painting.id}/order"><input type="submit" class="buy-now btn btn-sm btn-primary" value="Купи"></a></p>
             </div>
         </div>
     </div>
