@@ -1,3 +1,4 @@
+
 const baseUrl = 'https://painting-shop-krasteva-default-rtdb.europe-west1.firebasedatabase.app/paintings';
 
 async function getAll() {
@@ -121,6 +122,7 @@ async function getCombinedPaintings(equalToCategory, equalToSizes) {
 }
 
 async function create(data, token) {
+
     const response = await fetch(`${baseUrl}.json?auth=${token}`, {
         method: "POST",
         headers: {
@@ -130,8 +132,14 @@ async function create(data, token) {
     });
 
     const result = await response.json();
+    const id = result.name;
+
+    //add Id as row
+    await updateData(id, { id: id});
+    
     return result;
 }
+
 
 async function updateData(idPainting, data) {
     const response = await fetch(`${baseUrl}/${idPainting}.json`, {
