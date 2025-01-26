@@ -125,7 +125,35 @@ async function getCombinedPaintings(equalToCategory, equalToSizes) {
     }
 }
 
+async function create(data, token) {
+    const response = await fetch(`${baseUrl}.json?auth=${token}`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    });
 
+    const result = await response.json();
+    return result;
+}
+
+async function updateData(idPainting, data) {
+    const response = await fetch(`${baseUrl}/${idPainting}.json`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+        throw new Error(`Грешка: ${response.statusText}`);
+    }
+
+    const result = await response.json();
+    return result;
+}
 
 
 export default{
@@ -135,5 +163,7 @@ export default{
     getEqualSort,
     getPaintingsByCategory,
     getPaintingsBySize,
-    getCombinedPaintings
+    getCombinedPaintings,
+    create,
+    updateData
 }
