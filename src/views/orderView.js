@@ -1,6 +1,7 @@
 import { html, render } from "lit-html";
 import paintingApi from "../api/paintingApi.js";
 import orderApi from "../api/orderApi.js";
+import page from "page";
 
 const rootEl = document.getElementById('site-root');
 
@@ -86,7 +87,6 @@ const template = (painting, sumbitCreateOrder) => html`
         </div>
       </div>
     </div>
-
 `;
 
 export default async function(ctx){
@@ -137,9 +137,9 @@ export default async function(ctx){
           const idPainting = orderData['id-painting']; 
            
           try{
-              await orderApi.create(orderData);
-              await paintingApi.updateData(idPainting, { sold: "yes" });
-               
+             // await orderApi.create(orderData);
+             // await paintingApi.updateData(idPainting, { sold: "yes" });
+              page.redirect(`/artshop/${idPainting}/success-order`);
           }catch(err){
               console.log(err.message);
           }

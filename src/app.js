@@ -11,6 +11,7 @@ import artShopSingleView from './views/artShopSingleView.js';
 import portfolioSingleView from './views/portfolioSingleView.js';
 import loginAdminView from './views/loginAdminView.js';
 import orderView from './views/orderView.js';
+import successOrder from './views/partials/successOrder.js';
 
 page(layoutView);
 
@@ -19,6 +20,7 @@ page('/', homeView);
 page('/artshop', artShopView);
 page('/artshop/:id', artShopSingleView);
 page('/artshop/:id/order', orderView);
+page('/artshop/:id/success-order', successOrder);
 page('/portfolio', portfolioView);
 page('/portfolio/:id', portfolioSingleView);
 page('/about', aboutView);
