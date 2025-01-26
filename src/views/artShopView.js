@@ -197,10 +197,9 @@ export default async function artShopView(ctx){
     // Sort name by ASC
     async function sortNameASC(e){
       e.preventDefault();
+      const paitings = await paintingApi.getAll();
         try{
-            const sortPaitingNames = await paintingApi.getSort('name');
-
-            const sortedByNameAsc = sortPaitingNames.sort((a, b) => a.name.localeCompare(b.name));
+            const sortedByNameAsc = paitings.sort((a, b) => a.name.localeCompare(b.name));
             ctx.render(template(sortedByNameAsc, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter));
         }catch(error){
             console.log(error.message);
@@ -209,11 +208,10 @@ export default async function artShopView(ctx){
 
      // Sort name by DESC
     async function sortNameDESC(e){
+      const paitings = await paintingApi.getAll();
       e.preventDefault();
         try{
-          const sortPaitingNames = await paintingApi.getSort('name');
-
-          const sortedByNameDesc = sortPaitingNames.sort((a, b) => b.name.localeCompare(a.name));
+          const sortedByNameDesc = paitings.sort((a, b) => b.name.localeCompare(a.name));
           ctx.render(template(sortedByNameDesc, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter));
         }catch(error){
             console.log(error.message);
@@ -222,11 +220,10 @@ export default async function artShopView(ctx){
 
     // Sort price by ASC
     async function sortPriceASC(e){
+      const paitings = await paintingApi.getAll();
       e.preventDefault();
       try{
-        const sortPaitingPrice = await paintingApi.getSort('price');
-
-        const sortedByNameAsc = sortPaitingPrice.sort((a, b) => a.price - b.price);
+        const sortedByNameAsc = paitings.sort((a, b) => a.price - b.price);
         ctx.render(template(sortedByNameAsc, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter));
       }catch(error){
           console.log(error.message);
@@ -235,11 +232,10 @@ export default async function artShopView(ctx){
 
     // Sort price by DESC
     async function sortPriceDESC(e){
+      const paitings = await paintingApi.getAll();
       e.preventDefault();
       try{
-        const sortPaitingPrice = await paintingApi.getSort('price');
-
-        const sortedByPriceDesc = sortPaitingPrice.sort((a, b) => b.price - a.price);
+        const sortedByPriceDesc = paitings.sort((a, b) => b.price - a.price);
         ctx.render(template(sortedByPriceDesc, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter));
       }catch(error){
           console.log(error.message);

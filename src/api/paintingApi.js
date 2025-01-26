@@ -1,7 +1,7 @@
 const baseUrl = 'https://painting-shop-krasteva-default-rtdb.europe-west1.firebasedatabase.app/paintings';
 
 async function getAll() {
-    const response = await fetch(`${baseUrl}.json`);
+    const response = await fetch(`${baseUrl}.json?orderBy="sold"&equalTo="no"`);
     
     if(!response.ok){
         return await new Error(response.json());
@@ -22,18 +22,6 @@ async function getOne(id) {
     const result = await response.json();
 
     return result;
-}
-
-async function getSort(bySort) {
-    const response = await fetch(`${baseUrl}.json?orderBy="${bySort}"`);
-
-    if(!response.ok){
-        return await new Error(response.json());
-    }
-
-    const result = await response.json();
-
-    return Object.values(result);
 }
 
 async function getEqualSort(equalToCategory, equalToSizes) {
@@ -76,27 +64,21 @@ async function getEqualSort(equalToCategory, equalToSizes) {
 }
 
 async function getPaintingsByCategory(category) {
-    const url = `${baseUrl}.json?orderBy="category"&equalTo="${category}"`;
-    const response = await fetch(url);
-    if(!response.ok){
-        return await new Error(response.json());
-    }
-
-    const result = await response.json();
     
-    return Object.values(result);
+    const paintings = await getAll();
+
+    const categorySort = paintings.filter(c=>c.category === category);
+    
+    return categorySort;
 }
 
 async function getPaintingsBySize(size) {
-    const url = `${baseUrl}.json?orderBy="size"&equalTo="${size}"`;
-    const response = await fetch(url);
-    if(!response.ok){
-        return await new Error(response.json());
-    }
 
-    const result = await response.json();
+    const paintings = await getAll();
     
-    return Object.values(result);
+    const sizeSort = paintings.filter(s=>s.size == size);
+    
+    return sizeSort;
 }
 
 async function getCombinedPaintings(equalToCategory, equalToSizes) {
@@ -159,7 +141,6 @@ async function updateData(idPainting, data) {
 export default{
     getAll,
     getOne,
-    getSort,
     getEqualSort,
     getPaintingsByCategory,
     getPaintingsBySize,
