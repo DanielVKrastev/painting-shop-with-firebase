@@ -1,9 +1,10 @@
 import { html, render } from "lit-html";
-import paintingApi from "../api/paintingApi";
+import paintingApi from "../api/paintingApi.js";
+import orderApi from "../api/orderApi.js";
 
 const rootEl = document.getElementById('site-root');
 
-const template = (painting) => html`
+const template = (painting, sumbitCreateOrder) => html`
 <div class="bg-light py-3">
       <div class="container">
         <div class="row">
@@ -20,10 +21,13 @@ const template = (painting) => html`
           </div>
           <div class="col-md-7">
 
-            <form action="#" method="post">
+            <form method="POST" @submit=${sumbitCreateOrder}>
               
               <div class="p-3 p-lg-5 border">
                 <div class="form-group row">
+                  
+                  <input type="hidden" class="form-control" id="id-painting" name="id-painting" value="${painting.id}">
+
                   <div class="col-md-6">
                     <label for="c_fname" class="text-black">Име <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="c_fname" name="first-name">
@@ -90,7 +94,7 @@ export default async function(ctx){
         try{
             const painting = await paintingApi.getOne(paintingId);
             //console.log(painting);
-            ctx.render(template(painting));
+            ctx.render(template(painting, createOrder));
     
             const parentDiv = document.querySelector('.site-wrap');
             const loadedNavMobile = document.querySelector('.site-mobile-menu');
@@ -124,4 +128,21 @@ export default async function(ctx){
             console.log(error.message);
             
         }
+
+        async function createOrder(e) {
+          e.preventDefault();
+      
+          const formData = new FormData(e.currentTarget);
+          const orderData = Object.fromEntries(formData);
+          
+           
+          try{
+              await orderApi.create(orderData);
+              console.log('success');  
+          }catch(err){
+              console.log(err.message);
+          }
+      
+      }
 }
+

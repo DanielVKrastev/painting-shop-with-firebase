@@ -24,8 +24,8 @@ async function getOne(id) {
     return Object.values(result);
 }
 
-async function create(data, token) {
-    const response = await fetch(`${baseUrl}`, {
+async function create(data) {
+    const response = await fetch(`${baseUrl}.json`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
