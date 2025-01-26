@@ -47,7 +47,7 @@ const template = (paintings, categories, sizes, sortNameASC, sortNameDESC, sortP
                       <a href="/artshop/${paint.id}"><img src="${paint.imageUrl}" alt="${paint.name}" class="img-fluid"></a>
                     </figure>
                     <div class="block-4-text p-4">
-                      <h3><a href="/artshop/${paint._id}">${paint.name}</a></h3>
+                      <h3><a href="/artshop/${paint.id}">${paint.name}</a></h3>
                       <p class="mb-0">Размери: ${paint.size}</p>
                       <p class="text-primary font-weight-bold">${paint.price} лв.</p>
                     </div>
