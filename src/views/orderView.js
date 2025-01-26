@@ -31,7 +31,7 @@ const template = (painting, sumbitCreateOrder) => html`
 
                   <div class="col-md-6">
                     <label for="c_fname" class="text-black">Име <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="c_fname" name="first-name">
+                    <input type="text" class="form-control" id="c_fname" name="first-name" required>
                   </div>
                   <div class="col-md-6">
                     <label for="c_lname" class="text-black">Фамилия <span class="text-danger">*</span></label>
@@ -41,23 +41,23 @@ const template = (painting, sumbitCreateOrder) => html`
                 <div class="form-group row">
                   <div class="col-md-12">
                     <label for="c_email" class="text-black">Имейл <span class="text-danger">*</span></label>
-                    <input type="email" class="form-control" id="c_email" name="email" placeholder="">
+                    <input type="email" class="form-control" id="c_email" name="email" placeholder="" required>
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col-md-12">
                     <label for="telephone" class="text-black">Телефон </label> <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control" id="telephone" name="telephone">
+                    <input type="number" class="form-control" id="telephone" name="telephone" required>
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col-md-6">
                     <label for="city" class="text-black">Град / Село<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="city" name="city">
+                    <input type="text" class="form-control" id="city" name="city" required>
                   </div>
                   <div class="col-md-6">
                     <label for="address" class="text-black">Адрес <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="address" name="address">
+                    <input type="text" class="form-control" id="address" name="address" required>
                   </div>
                 </div>
 
@@ -134,10 +134,13 @@ export default async function(ctx){
       
           const formData = new FormData(e.currentTarget);
           const orderData = Object.fromEntries(formData);
-          const idPainting = orderData['id-painting']; 
+          if( ! orderData['address'] || ! orderData['city'] || ! orderData['email'] || ! orderData['first-name'] || ! orderData['second-name'] || ! orderData['telephone']) return;
+          const idPainting = orderData['id-painting'];
+          const painting = await paintingApi.getOne(idPainting);
+          const namePainting = painting.name;
            
           try{
-              await orderApi.create(orderData);
+              await orderApi.create({...orderData, 'name-painting': namePainting});
               await paintingApi.updateData(idPainting, { sold: "yes" });
               page.redirect(`/artshop/${idPainting}/success-order`);
           }catch(err){

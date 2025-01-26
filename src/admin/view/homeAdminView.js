@@ -1,8 +1,10 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { html } from "lit-html";
 import { auth } from "../../config/firebaseInit";
+import orderApi from "../../api/orderApi.js";
+import paintingApi from "../../api/paintingApi.js";
 
-const template = () => html`
+const template = (orders, getOnePainting) => html`
             <!-- Sale & Revenue Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
@@ -54,66 +56,34 @@ const template = () => html`
                         <a href="">Show All</a>
                     </div>
                     <div class="table-responsive">
-                        <table class="table text-start align-middle table-bordered table-hover mb-0">
-                            <thead>
-                                <tr class="text-dark">
-                                    <th scope="col"><input class="form-check-input" type="checkbox"></th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Invoice</th>
-                                    <th scope="col">Customer</th>
-                                    <th scope="col">Amount</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Име</th>
+                                <th scope="col">E-mail</th>
+                                <th scope="col">Телефон</th>
+                                <th scope="col">Град</th>
+                                <th scope="col">Адрес</th>
+                                <th scope="col">Картина</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            ${orders.map((order, id=0) => html`
+                            <tr>
+                                <th scope="row">${id++}</th>
+                                <td>${order['first-name']} ${order['last-name']}</td>
+                                <td>${order.email}</td>
+                                <td>${order.telephone}</td>
+                                <td>${order.city}</td>
+                                <td>${order.address}</td>
+                                <td>${order['name-painting']}</td>
+                            </tr>
+                        `)}
+                        </tbody>
+                    </table>
                     </div>
                 </div>
             </div>
@@ -244,9 +214,10 @@ const template = () => html`
 `;
 
 export default async function(ctx, next){
+    const orders = await orderApi.getAll();
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            ctx.render(template());
+            ctx.render(template(orders, getOnePainting));
           // Update your UI or global state with the user info
         } else {
             // Redirect if no haven't user
@@ -255,5 +226,11 @@ export default async function(ctx, next){
             
             window.location.href = `${currentUrl.origin}/login`;
         }})
+}
+
+async function getOnePainting(id) {
+    const paintName = await paintingApi.getOne(id);
+    console.log(paintName.name);
+    return paintName.name;
     
 }
