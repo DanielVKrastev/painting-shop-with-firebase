@@ -134,11 +134,13 @@ export default async function(ctx){
       
           const formData = new FormData(e.currentTarget);
           const orderData = Object.fromEntries(formData);
+          const idPainting = orderData['id-painting']; 
           
            
           try{
               await orderApi.create(orderData);
-              console.log('success');  
+              await paintingApi.updateData(idPainting, { sold: "yes" });
+               
           }catch(err){
               console.log(err.message);
           }
