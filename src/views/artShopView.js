@@ -135,7 +135,7 @@ export default async function artShopView(ctx){
       
         if (!category && !size) {
             try {
-              const paintings = await paintingApi.getAll();
+              const paintings = await paintingApi.getAllForSales();
               console.log('none');
               ctx.render(template(paintings, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter));
             } catch (error) {
@@ -197,7 +197,7 @@ export default async function artShopView(ctx){
     // Sort name by ASC
     async function sortNameASC(e){
       e.preventDefault();
-      const paitings = await paintingApi.getAll();
+      const paitings = await paintingApi.getAllForSales();
         try{
             const sortedByNameAsc = paitings.sort((a, b) => a.name.localeCompare(b.name));
             ctx.render(template(sortedByNameAsc, categories, sizes, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC, onRadioChange, onCategoryClick, clearFilter));
@@ -208,7 +208,7 @@ export default async function artShopView(ctx){
 
      // Sort name by DESC
     async function sortNameDESC(e){
-      const paitings = await paintingApi.getAll();
+      const paitings = await paintingApi.getAllForSales();
       e.preventDefault();
         try{
           const sortedByNameDesc = paitings.sort((a, b) => b.name.localeCompare(a.name));
@@ -220,7 +220,7 @@ export default async function artShopView(ctx){
 
     // Sort price by ASC
     async function sortPriceASC(e){
-      const paitings = await paintingApi.getAll();
+      const paitings = await paintingApi.getAllForSales();
       e.preventDefault();
       try{
         const sortedByNameAsc = paitings.sort((a, b) => a.price - b.price);
@@ -232,7 +232,7 @@ export default async function artShopView(ctx){
 
     // Sort price by DESC
     async function sortPriceDESC(e){
-      const paitings = await paintingApi.getAll();
+      const paitings = await paintingApi.getAllForSales();
       e.preventDefault();
       try{
         const sortedByPriceDesc = paitings.sort((a, b) => b.price - a.price);

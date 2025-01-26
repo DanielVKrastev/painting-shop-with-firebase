@@ -1,6 +1,18 @@
 const baseUrl = 'https://painting-shop-krasteva-default-rtdb.europe-west1.firebasedatabase.app/paintings';
 
 async function getAll() {
+    const response = await fetch(`${baseUrl}.json`);
+    
+    if(!response.ok){
+        return await new Error(response.json());
+    }
+
+    const result = await response.json();
+
+    return Object.values(result);
+}
+
+async function getAllForSales() {
     const response = await fetch(`${baseUrl}.json?orderBy="sold"&equalTo="no"`);
     
     if(!response.ok){
@@ -11,6 +23,7 @@ async function getAll() {
 
     return Object.values(result);
 }
+
 
 async function getOne(id) {
     const response = await fetch(`${baseUrl}/${id}.json`);
@@ -65,7 +78,7 @@ async function getEqualSort(equalToCategory, equalToSizes) {
 
 async function getPaintingsByCategory(category) {
     
-    const paintings = await getAll();
+    const paintings = await getAllForSales();
 
     const categorySort = paintings.filter(c=>c.category === category);
     
@@ -74,7 +87,7 @@ async function getPaintingsByCategory(category) {
 
 async function getPaintingsBySize(size) {
 
-    const paintings = await getAll();
+    const paintings = await getAllForSales();
     
     const sizeSort = paintings.filter(s=>s.size == size);
     
@@ -140,6 +153,7 @@ async function updateData(idPainting, data) {
 
 export default{
     getAll,
+    getAllForSales,
     getOne,
     getEqualSort,
     getPaintingsByCategory,

@@ -87,7 +87,7 @@ const template = (paintings, sortNameASC, sortNameDESC, sortPriceASC, sortPriceD
 export default async function(ctx){
 
     try{
-        const paintings = await paintingApi.getAll();
+        const paintings = await paintingApi.getAllForSales();
         //console.log(paintings);
         ctx.render(template(paintings, sortNameASC, sortNameDESC, sortPriceASC, sortPriceDESC));
 
