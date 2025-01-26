@@ -10,7 +10,7 @@ const template = (artCategoriesView) => html`
         <div class="col-md-5 text-center text-md-left pt-5 pt-md-0">
             <h1 class="mb-2">Галерия - Елица Кръстева</h1>
             <div class="intro-text text-center text-md-left">
-            <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at iaculis quam. Integer accumsan tincidunt fringilla. </p>
+            <p class="mb-4">Свят на цветове, емоции и уникални творби, които носят радост и вдъхновение. </p>
             <p>
                 <a href="/artshop" class="btn btn-sm btn-primary">Купи сега</a>
             </p>
@@ -40,8 +40,10 @@ export default function(ctx, next){
     partialsContent.appendChild(artCategoriesDiv);
     artCategoriesView(artCategoriesDiv);
 
+    /*
     const artCarouselDiv = document.createElement('div');
     artCarouselDiv.id = 'art-carousel-container';
     partialsContent.appendChild(artCarouselDiv);
     artWorksCarouselView(artCarouselDiv);
+    */
 }

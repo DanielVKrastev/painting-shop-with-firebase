@@ -9,16 +9,21 @@ const template = (onSubmitPainting, onSubmitCategory, onSubmitSize, sizes, categ
  <!-- Form Start -->
  <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
+
+    <a href="https://photos.google.com/share/AF1QipPyeiYbVGbvqtQbeuj4Q8I-34SP-Oyvt6u7YfhDLdl2WGbFf7hgKXbcqxvDP8kPgQ?key=WVktQk9pTkp4T1o1a2ZFWXRLR3pGVDJ2dFJZc2Zn" target="_blank" class="btn btn-primary" > Добави снимки</a>
+
         <div class="col-sm-12 col-xl-6">
+
+            
             <form method="POST" @submit=${onSubmitPainting}>
                 <div class="bg-light rounded h-100 p-4">
                     <h6 class="mb-4">Добави картина</h6>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="namePaintingInput" placeholder="Име на картина" name="name">
+                        <input type="text" class="form-control" id="namePaintingInput" placeholder="Име на картина" name="name" required>
                         <label for="namePaintingInput">Име на картина</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="number" class="form-control" id="price" placeholder="Цена" name="price">
+                        <input type="number" class="form-control" id="price" placeholder="Цена" name="price" required>
                         <label for="price">Цена</label>
                     </div>
                     <div class="form-floating mb-3">
@@ -42,16 +47,16 @@ const template = (onSubmitPainting, onSubmitCategory, onSubmitSize, sizes, categ
                         <label for="floatingSelect2">Размери</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="imagePaintingInput" placeholder="Снимка URL" name="imageUrl">
+                        <input type="text" class="form-control" id="imagePaintingInput" placeholder="Снимка URL" name="imageUrl" required>
                         <label for="imagePaintingInput">Снимка URL</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="paintingInput" placeholder="Бои" name="paints">
+                        <input type="text" class="form-control" id="paintingInput" placeholder="Бои" name="paints" required>
                         <label for="paintingInput">Бои</label>
                     </div>
                     <div class="form-floating">
                         <textarea class="form-control" placeholder="Напиши описание тук"
-                            id="floatingTextarea" style="height: 150px;" name="description"></textarea>
+                            id="floatingTextarea" style="height: 150px;" name="description" required></textarea>
                         <label for="floatingTextarea">Описание</label>
                     </div>
 
@@ -105,11 +110,11 @@ const template = (onSubmitPainting, onSubmitCategory, onSubmitSize, sizes, categ
                 <div class="bg-light rounded h-100 p-4">
                         <h6 class="mb-4">Добави категория</h6>
                         <div class="form-floating mb-3">
-                            <input name="name" type="text" class="form-control" id="nameCategory" placeholder="Име на категория">
+                            <input name="name" type="text" class="form-control" id="nameCategory" placeholder="Име на категория" required>
                             <label for="nameCategory">Име на категория</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input name="imageUrl" type="text" class="form-control" id="categoryImage" placeholder="Снимка URL">
+                            <input name="imageUrl" type="text" class="form-control" id="categoryImage" placeholder="Снимка URL" required>
                             <label for="categoryImage">Снимка URL</label>
                         </div>
                         <button type="submit" class="btn btn-primary">Създай категория</button>
@@ -123,7 +128,7 @@ const template = (onSubmitPainting, onSubmitCategory, onSubmitSize, sizes, categ
                     <div class="bg-light rounded h-100 p-4">
                         <h6 class="mb-4">Добави размери</h6>
                         <div class="form-floating mb-3">
-                            <input name="size" type="text" class="form-control" id="sizeInput"  placeholder="Размери"> 
+                            <input name="size" type="text" class="form-control" id="sizeInput"  placeholder="Размери" required> 
                             <label for="sizeInput">Размери</label>
                         </div>
                         <button type="submit" class="btn btn-primary">Създай размер</button>

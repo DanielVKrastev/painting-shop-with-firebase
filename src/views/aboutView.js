@@ -1,4 +1,5 @@
 import { html } from "lit-html";
+import artCategoriesView from "./partials/artCategoriesView";
 
 const template = () => html`
     <div class="bg-light py-3">
@@ -37,8 +38,18 @@ const template = () => html`
     </div>
 
 <!-- add artworks-carousel and features -->
+<div id="partials-content"> 
+</div>
+
 `;
 
 export default function(ctx){
     ctx.render(template());
+
+    const partialsContent = document.getElementById('partials-content');
+
+    const artCategoriesDiv = document.createElement('div');
+    artCategoriesDiv.id = 'art-categories';
+    partialsContent.appendChild(artCategoriesDiv);
+    artCategoriesView(artCategoriesDiv);
 }

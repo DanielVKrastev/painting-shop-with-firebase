@@ -56,7 +56,7 @@ const template = (paintings, categories, sizes, sortNameASC, sortNameDESC, sortP
                 `)
         }
                 
-              
+            ${paintings.length === 0 ? html`<p class="mb-0">Няма налични картини</p>` : ''}
 
             </div>
             <div class="row" data-aos="fade-up">
