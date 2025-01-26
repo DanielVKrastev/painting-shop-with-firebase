@@ -2,56 +2,56 @@ import { html, render } from "lit-html";
 import categoryApi from "../../api/categoryApi";
 import { auth } from "../../config/firebaseInit";
 import sizeApi from "../../api/sizeApi";
+import paintingApi from "../../api/paintingApi.js";
 
 const rootEl = document.querySelector('#site-root');
-const template = (onSubmitCategory, onSubmitSize) => html`
+const template = (onSubmitPainting, onSubmitCategory, onSubmitSize, sizes, categories) => html`
  <!-- Form Start -->
  <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
         <div class="col-sm-12 col-xl-6">
-            <form>
+            <form method="POST" @submit=${onSubmitPainting}>
                 <div class="bg-light rounded h-100 p-4">
                     <h6 class="mb-4">Добави картина</h6>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="namePaintingInput" placeholder="Име на картина">
+                        <input type="text" class="form-control" id="namePaintingInput" placeholder="Име на картина" name="name">
                         <label for="namePaintingInput">Име на картина</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="number" class="form-control" id="price" placeholder="Цена">
+                        <input type="number" class="form-control" id="price" placeholder="Цена" name="price">
                         <label for="price">Цена</label>
                     </div>
                     <div class="form-floating mb-3">
                         <select class="form-select" id="floatingSelect1"
-                            aria-label="Floating label select example">
+                            aria-label="Floating label select example" name="category">
                             <option selected>Категория</option>
-                            <option value="1">портрети</option>
-                            <option value="2">пейзажи</option>
-                            <option value="3">абсрактни картини</option>
+                            ${categories.map(category => html`
+                                <option value=${category.name}>${category.name}</option>
+                            `)}
                         </select>
                         <label for="floatingSelect1">Категория</label>
                     </div>
                     <div class="form-floating mb-3">
                         <select class="form-select" id="floatingSelect2"
-                            aria-label="Floating label select example">
+                            aria-label="Floating label select example" name="size">
                             <option selected>Размери</option>
-                            <option value="1">25см / 35см</option>
-                            <option value="2">40см / 50см</option>
-                            <option value="3">60см / 80см</option>
-                            <option value="3">100см / 120см</option>
+                            ${sizes.map(size => html`
+                                <option value=${size}>${size}</option>
+                            `)}
                         </select>
                         <label for="floatingSelect2">Размери</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="imagePaintingInput" placeholder="Снимка URL">
+                        <input type="text" class="form-control" id="imagePaintingInput" placeholder="Снимка URL" name="imageUrl">
                         <label for="imagePaintingInput">Снимка URL</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="paintingInput" placeholder="Бои">
+                        <input type="text" class="form-control" id="paintingInput" placeholder="Бои" name="paints">
                         <label for="paintingInput">Бои</label>
                     </div>
                     <div class="form-floating">
                         <textarea class="form-control" placeholder="Напиши описание тук"
-                            id="floatingTextarea" style="height: 150px;"></textarea>
+                            id="floatingTextarea" style="height: 150px;" name="description"></textarea>
                         <label for="floatingTextarea">Описание</label>
                     </div>
 
@@ -59,15 +59,15 @@ const template = (onSubmitCategory, onSubmitSize) => html`
                         <legend class="col-form-label col-sm-2 pt-0">Продадена</legend>
                         <div class="col-sm-10">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios"
-                                    id="gridRadios1" value="yes" checked>
+                                <input class="form-check-input" type="radio"
+                                    id="gridRadios1" value="yes" name="sold" >
                                 <label class="form-check-label" for="gridRadios1">
                                     Да
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios"
-                                    id="gridRadios2" value="no">
+                                <input class="form-check-input" type="radio"
+                                    id="gridRadios1" value="no" name="sold" checked>
                                 <label class="form-check-label" for="gridRadios2">
                                     Не
                                 </label>
@@ -79,15 +79,15 @@ const template = (onSubmitCategory, onSubmitSize) => html`
                         <legend class="col-form-label col-sm-2 pt-0">Активна в сайта</legend>
                         <div class="col-sm-10">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios"
-                                    id="activeRadio1" value="yes" checked>
+                                <input class="form-check-input" type="radio"
+                                    id="activeRadio1" value="yes" name="active" checked>
                                 <label class="form-check-label" for="activeRadio1">
                                     Да
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios"
-                                    id="activeRadio2" value="no">
+                                <input class="form-check-input" type="radio"
+                                    id="activeRadio1" value="no" name="active">
                                 <label class="form-check-label" for="activeRadio2">
                                     Не
                                 </label>
@@ -138,8 +138,31 @@ const template = (onSubmitCategory, onSubmitSize) => html`
 
 `;
 
-export default function(ctx, next){
-    ctx.render(template(createCategory, createSize));
+export default async function(ctx, next){
+    const sizes = await sizeApi.getAll();
+    const categories = await categoryApi.getAll();
+    ctx.render(template(createPainting, createCategory, createSize, sizes, categories));
+}
+
+async function createPainting(e) {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const paintingData = Object.fromEntries(formData);
+    
+ 
+    try{
+        const user = auth.currentUser;
+        user.getIdToken() //get USER TOKEN, return promise
+            .then((token) => {
+                paintingApi.create(paintingData, token);
+            })
+        
+        e.target.reset();
+        
+    }catch(err){
+        console.log(err.message);
+    }
 }
 
 async function createCategory(e) {

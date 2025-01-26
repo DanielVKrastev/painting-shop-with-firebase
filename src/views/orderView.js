@@ -137,8 +137,8 @@ export default async function(ctx){
           const idPainting = orderData['id-painting']; 
            
           try{
-             // await orderApi.create(orderData);
-             // await paintingApi.updateData(idPainting, { sold: "yes" });
+              await orderApi.create(orderData);
+              await paintingApi.updateData(idPainting, { sold: "yes" });
               page.redirect(`/artshop/${idPainting}/success-order`);
           }catch(err){
               console.log(err.message);
