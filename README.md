@@ -3,7 +3,9 @@
 ## Description
 JavaScript Single Page Application Project for Painting Shop using Firebase
 
--
+Developed a Single Page Application for selling paintings, implemented as an end-to-end solution. The project 
+utilized Vanilla JavaScript, Firebase for backend services and hosting, Bootstrap for responsive styling, Page.js 
+for client-side routing, Lit-html for templating, and Vite for modern bundling and development workflows.
 
 ## Tech Stack
 Javascript end to end application using following technologies:
